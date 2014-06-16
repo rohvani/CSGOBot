@@ -1,0 +1,6 @@
+c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Debug\Botv2.exe
+c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Debug\Botv2.pdb
+c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.exe
+c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.pdb
+C:\Users\Admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.csprojResolveAssemblyReference.cache

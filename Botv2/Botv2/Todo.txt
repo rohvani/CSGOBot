@@ -1,0 +1,5 @@
+
+[Done]		Load BSP file from game directory and obtain map name from memory
+[Done]		Get positions of enemie's bones instead of just targetting their position
+*			Fix BSP loading of faces so we can create a proper physics model of the map to perform visibility checks
+*			Decrease spread/recoil but make it look legit with randomness
