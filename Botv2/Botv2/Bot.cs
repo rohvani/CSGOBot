@@ -87,25 +87,22 @@ namespace Botv2
 
 				while (true)
 				{
-					Vector3 pos = GameHelper.getPlayerPositon(localEntityIndex);
+					GameHelper.detectLocalPlayerIndex();
+
 					if (GameView.instance != null && GameView.instance.ready)
 					{
-						GameHelper.detectLocalPlayerIndex();
+						Vector3 pos = GameHelper.getPlayerPositon(localEntityIndex);
 						GameView.instance.camera.SetCameraPosition(new Microsoft.Xna.Framework.Vector3(pos.x, pos.y, pos.z + 50));
 					}
-
-					//GameHelper.getMapName();
 
 					if (aimEnabled)
 					{
 						if ((Control.ModifierKeys & Keys.Shift) != 0)
 						{
 							targetBestEnemyViaScore(); 
-							GameHelper.detectLocalPlayerIndex();
-
-							Collision.test();
 						}
 					}
+
 					if (lagReduction) Thread.Sleep(15);
 				}
 			}
