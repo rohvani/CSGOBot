@@ -1,0 +1,7 @@
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Release\Botv2.exe
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Release\Botv2.pdb
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Release\Botv2.exe
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Release\Botv2.pdb
+C:\Users\Admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Release\Botv2.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Release\Jitter.dll

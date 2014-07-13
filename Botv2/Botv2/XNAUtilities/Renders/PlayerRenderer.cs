@@ -40,53 +40,15 @@ namespace Botv2.XNAUtilities.Renderers
 					if (playerpos.isZero()) continue;
 					
 					Color color = Botv2.Utilities.GameHelper.getPlayerTeam(i) ==  Botv2.Utilities.GameHelper.getPlayerTeam(Botv2.Bot.localEntityIndex) ? Color.Green : Color.Red;
-				
-					VertexPositionColor[] player = new VertexPositionColor[18 + 6];
 
 					int boxWidth = 35;
 					int boxHeight = 60;
 
-					//  + (playerpos.x - (boxWidth / 2))
+					VertexPositionColor[] player = DrawHelper.createBox(boxWidth, boxHeight, color);
 
 					float xDiff = (playerpos.x - (boxWidth / 2));
 					float yDiff = (playerpos.y - (boxWidth / 2));
 					float zDiff = (playerpos.z);
-
-					player[0] = new VertexPositionColor(new Vector3(0, 0, 0), color);
-					player[1] = new VertexPositionColor(new Vector3(0, 0, boxHeight), color);
-
-					player[2] = new VertexPositionColor(new Vector3(0, 0, 0), color);
-					player[3] = new VertexPositionColor(new Vector3(0, boxWidth, 0), color);
-
-					player[4] = new VertexPositionColor(new Vector3(0, 0, 0), color);
-					player[5] = new VertexPositionColor(new Vector3(boxWidth, 0, 0), color);
-
-					player[6] = new VertexPositionColor(new Vector3(0, 0, boxHeight), color);
-					player[7] = new VertexPositionColor(new Vector3(boxWidth, 0, boxHeight), color);
-
-					player[8] = new VertexPositionColor(new Vector3(0, 0, boxHeight), color);
-					player[9] = new VertexPositionColor(new Vector3(0, boxWidth, boxHeight), color);
-
-					player[10] = new VertexPositionColor(new Vector3(0, boxWidth, boxHeight), color);
-					player[11] = new VertexPositionColor(new Vector3(0, boxWidth, 0), color);
-
-					player[12] = new VertexPositionColor(new Vector3(boxWidth, 0, boxHeight), color);
-					player[13] = new VertexPositionColor(new Vector3(boxWidth, 0, 0), color);
-
-					player[14] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, 0), color);
-					player[15] = new VertexPositionColor(new Vector3(boxWidth, 0, 0), color);
-
-					player[16] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, 0), color);
-					player[17] = new VertexPositionColor(new Vector3(0, boxWidth, 0), color);
-
-					player[18] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, boxHeight), color);
-					player[19] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, 0), color);
-
-					player[20] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, boxHeight), color);
-					player[21] = new VertexPositionColor(new Vector3(boxWidth, 0, boxHeight), color);
-
-					player[22] = new VertexPositionColor(new Vector3(boxWidth, boxWidth, boxHeight), color);
-					player[23] = new VertexPositionColor(new Vector3(0, boxWidth, boxHeight), color);
 
 					for (int b = 0; b < player.Length; b++)
 					{
@@ -94,10 +56,6 @@ namespace Botv2.XNAUtilities.Renderers
 						player[b].Position.Y += yDiff;
 						player[b].Position.Z += zDiff;
 					}
-
-					//player[0] = new VertexPositionColor(new Microsoft.Xna.Framework.Vector3(0 + playerpos.x, 0 + playerpos.y, 0 + playerpos.z), color);
-					//player[1] = new VertexPositionColor(new Microsoft.Xna.Framework.Vector3(0 + playerpos.x, 100 + playerpos.y, 0 + playerpos.z), color);
-					//player[2] = new VertexPositionColor(new Microsoft.Xna.Framework.Vector3(100 + playerpos.x, 0 + playerpos.y, 0 + playerpos.z), color);
 
 					this.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, player, 0, player.Length / 2);
 				}

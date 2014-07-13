@@ -4,3 +4,4 @@ c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\D
 c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.exe
 c:\users\admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.pdb
 C:\Users\Admin\documents\visual studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Debug\Botv2.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Debug\Jitter.dll

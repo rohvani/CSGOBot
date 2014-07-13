@@ -72,7 +72,7 @@ namespace Botv2.Utilities
 			float y = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY_POSITION + 4);
 			float z = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY_POSITION + 8);
 
-			for (int i = 0; i < 32; i++)
+			for (int i = 0; i < Botv2.Bot.numPlayers; i++)
 			{
 				Vector3 entityPosition = GameHelper.getPlayerPositon(i);
 

@@ -1,64 +1,124 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
-using Bot;
+using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using Botv2.Utilities;
 
 namespace Botv2
 {
-	class Overlay : Form
+	public class Overlay : Form
 	{
-		public Vector3[] positions;
+		// Directx graphics device
+		GraphicsDevice dev = null;
+		BasicEffect effect = null;
 
-		public Overlay() : base()
+		// Wheel vertexes
+		VertexPositionColor[] v = new VertexPositionColor[100];
+
+		public Texture2D t;
+		public SpriteBatch test;
+
+		// Wheel rotation
+		float rot = 0;
+
+		public Overlay()
 		{
-			this.TopMost = true;
-			this.DoubleBuffered = true;
-			this.ShowInTaskbar = false;
-			this.FormBorderStyle = FormBorderStyle.None;
-			this.WindowState = FormWindowState.Maximized;
-			this.BackColor = Color.Purple;
-			this.TransparencyKey = Color.Purple;
+			StartPosition = FormStartPosition.CenterScreen;
+			Size = new System.Drawing.Size(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+			FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;  // no borders
 
-			positions = new Vector3[32];
+			TopMost = true;        // make the form always on top                     
+			Visible = true;        // Important! if this isn't set, then the form is not shown at all
 
-			//Bot.localEntityIndex;
+			// Set the form click-through
+			int initialStyle = GetWindowLong(this.Handle, -20);
+			SetWindowLong(this.Handle, -20, initialStyle | 0x80000 | 0x20);
+
+			// Create device presentation parameters
+			PresentationParameters p = new PresentationParameters();
+			p.IsFullScreen = false;
+			p.DeviceWindowHandle = this.Handle;
+			p.BackBufferFormat = SurfaceFormat.Vector4;
+			p.PresentationInterval = PresentInterval.One;
+
+			// Create XNA graphics device
+			dev = new GraphicsDevice(GraphicsAdapter.DefaultAdapter, GraphicsProfile.Reach, p);
+			t = new Texture2D(dev, 1, 1);
+			t.SetData(new[] { Color.White });
+
+			test = new SpriteBatch(dev);
+
+			// Init basic effect
+			effect = new BasicEffect(dev);
+
+			// Extend aero glass style on form init
+			OnResize(null);
 		}
+
+
+		protected override void OnResize(EventArgs e)
+		{
+			int[] margins = new int[] { 0, 0, Width, Height };
+
+			// Extend aero glass style to whole form
+			DwmExtendFrameIntoClientArea(this.Handle, ref margins);
+		}
+
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			// do nothing here to stop window normal background painting
+		}
+
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			drawBlips(e);
+			// Clear device with fully transparent black
+			dev.Clear(new Microsoft.Xna.Framework.Color(0, 0, 0, 0.0f));
 
-			Thread.Sleep(20);
-			this.Invalidate(); //cause repaint
-		}
+			// Rotate wheel a bit
+			rot += 0.1f;
 
-		private void drawBlips(PaintEventArgs e)
-		{
-			for (int i = 0; i < 16; i++ )
+			// Make the wheel vertexes and colors for vertexes
+			test.Begin();
+			for (int i = 0; i < Botv2.Bot.numPlayers; i++)
 			{
-				Vector3 position = GameHelper.getPlayerPositon(i);
+				var worldPos = GameHelper.getPlayerPositon(i);
+				if(worldPos.isZero() || i == Bot.localEntityIndex || GameHelper.getPlayerHealth(i) <= 0) continue;
 
-				if (!position.isZero() && GameHelper.getPlayerHealth(i) > 0 && i != Bot.localEntityIndex)
-				{
-					Pen pen = GameHelper.getPlayerTeam(i) != GameHelper.getPlayerTeam(Bot.localEntityIndex) ? Pens.Red : Pens.Green;
+				worldPos.z += 50;
 
-					Vector2 test = GameHelper.WorldToScreen(position);
+				var color = GameHelper.getPlayerTeam(i) == GameHelper.getPlayerTeam(Bot.localEntityIndex) ? Color.Green : Color.Red;
+				var pos = GameHelper.WorldToScreen(worldPos);
 
-					Vector2 pointFeet = GameHelper.WorldToScreen(GameHelper.getPlayerBonePosition(i, 0));
-					Vector2 pointHead = GameHelper.WorldToScreen(GameHelper.getPlayerBonePosition(i, 11));
-
-					e.Graphics.DrawRectangle(pen, new Rectangle((int)pointHead.x - (((int)(test.y - pointHead.y) / 2) / 2), (int)pointHead.y, (int)(test.y - pointHead.y) / 2, (int)(test.y - pointHead.y)));
-
-					//SolidBrush brush = new System.Drawing.SolidBrush(color);
-					//e.Graphics.FillRectangle(brush, new Rectangle(((int)position.x / 25)  + 500, ((int)position.y / 25) * -1 + 150, 5, 5));
-				}
+				test.Draw(t, new Rectangle((int)pos.x - 2, (int)pos.y - 2, 5, 5), color);
 			}
+			test.End();
 
-			
+			// Enable position colored vertex rendering
+			effect.VertexColorEnabled = true;
+			foreach (EffectPass pass in effect.CurrentTechnique.Passes) pass.Apply();
+
+			// Draw the primitives (the wheel)
+			dev.DrawUserPrimitives(PrimitiveType.TriangleList, v, 0, v.Length / 3, VertexPositionColor.VertexDeclaration);
+
+			// Present the device contents into form
+			dev.Present();
+
+			// Redraw immediatily
+			Invalidate();
 		}
+
+
+		[DllImport("user32.dll", SetLastError = true)]
+		static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+		[DllImport("user32.dll")]
+		static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+		[DllImport("dwmapi.dll")]
+		static extern void DwmExtendFrameIntoClientArea(IntPtr hWnd, ref int[] pMargins);
+
 	}
 }

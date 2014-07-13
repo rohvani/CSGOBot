@@ -35,6 +35,8 @@ namespace Botv2
 		static public bool waited = false;
 		static public bool ready = false;
 
+		static public int numPlayers = 64;
+
 		public static void Initialize()
 		{
 			Console.Title = "Bot - Console";
@@ -76,24 +78,23 @@ namespace Botv2
 
 				ready = true;
 
-				// Radar disabled temporarily - too lazy ton move old overlay class over from original bot project
-				/*if (radarEnabled)
+				if (radarEnabled)
 				{
-					Overlay overlay = new Overlay();
+					Overlay overlay;
 					Thread m_Thread = new Thread(new System.Threading.ThreadStart(delegate { overlay = new Overlay(); Application.Run(overlay); }));
 					m_Thread.Start();
-				}*/
+				}
 
 				while (true)
 				{
 					Vector3 pos = GameHelper.getPlayerPositon(localEntityIndex);
 					if (GameView.instance != null && GameView.instance.ready)
 					{
-						GameHelper.detectLocalPlayerIndex();
-						GameView.instance.camera.SetCameraPosition(new Microsoft.Xna.Framework.Vector3(pos.x, pos.y, pos.z + 50));
+						//GameHelper.detectLocalPlayerIndex();
+						//GameView.instance.camera.SetCameraPosition(new Microsoft.Xna.Framework.Vector3(pos.x, pos.y, pos.z + 50));
 					}
 
-					GameHelper.getMapName();
+					//GameHelper.getMapName();
 
 					if (aimEnabled)
 					{
@@ -101,6 +102,8 @@ namespace Botv2
 						{
 							targetBestEnemyViaScore(); 
 							GameHelper.detectLocalPlayerIndex();
+
+							Colalision.test();
 						}
 					}
 					if (lagReduction) Thread.Sleep(15);
@@ -178,7 +181,7 @@ namespace Botv2
 			if (bestAngleDifference == null) return;
 			if (target >= 0)
 			{
-				Vector3 vecToAim = GameHelper.getPlayerBonePosition(target, 11);
+				Vector3 vecToAim = GameHelper.getPlayerBonePosition(target, 10);
 				//if (vecToAim.z < GameHelper.getPlayerPositon(target).z) vecToAim = GameHelper.getPlayerPositon(target);
 				//if (vecToAim.z > GameHelper.getPlayerPositon(target).z + 40) vecToAim = GameHelper.getPlayerPositon(target);
 
@@ -194,7 +197,7 @@ namespace Botv2
 			byte currentTeam = GameHelper.getPlayerTeam(localEntityIndex);
 			Vector3 currentPosition = GameHelper.getPlayerPositon(localEntityIndex);
 
-			float[] targetScores = new float[64];
+			float[] targetScores = new float[Botv2.Bot.numPlayers];
 
 			if (!waited && lastTargetIndex != -1 && GameHelper.getPlayerHealth(lastTargetIndex) <= 0)
 			{
@@ -203,7 +206,7 @@ namespace Botv2
 				return;
 			}
 
-			for (int i = 0; i < 64; i++)
+			for (int i = 0; i < Botv2.Bot.numPlayers; i++)
 			{
 				Vector3 position = GameHelper.getPlayerPositon(i);
 				byte team = GameHelper.getPlayerTeam(i);
@@ -224,12 +227,6 @@ namespace Botv2
 						targetScores[i] += position.distance(currentPosition) / 10;
 					}
 				}
-			}
-
-
-			for (int i = 0; i < 32; i++)
-			{
-				//Console.WriteLine("Index: {0}, score: {1}", i, targetScores[i]);
 			}
 
 			float winnerScore = targetScores.Min();

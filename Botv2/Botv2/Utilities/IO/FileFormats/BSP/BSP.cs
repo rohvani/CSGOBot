@@ -31,7 +31,7 @@ namespace Botv2.Utilities.IO.FileFormats.BSP
 			this.loadLumps();
 			this.mapRevision = FileReader.readInt(stream);
 
-			Console.WriteLine("[BSPLoader] {0} loaded", ((BSPRenderer)GameView.instance.BSPRenderer).mapName);
+			Console.WriteLine("[BSPLoader] File loaded");//, ((BSPRenderer)GameView.instance.BSPRenderer).mapName);
 			Console.WriteLine("[BSPLoader] Version: {0}", version);
 			Console.WriteLine("[BSPLoader] Map Revision: {0}", mapRevision);
 			Console.WriteLine();

@@ -71,7 +71,7 @@ namespace Botv2
 
 		protected override void Update(GameTime gameTime)
 		{
-			if (((BSPRenderer)BSPRenderer).mapName != Botv2.Utilities.GameHelper.getMapName()) BSPRenderer.Load();
+			if (((BSPRenderer)BSPRenderer).mapName != Botv2.Utilities.GameHelper.getMapName() && Botv2.Utilities.GameHelper.getMapName().Length > 0) BSPRenderer.Load();
 
 			base.Update(gameTime);
 		}
@@ -82,7 +82,6 @@ namespace Botv2
 
 			BSPRenderer.Draw();
 			PlayerRenderer.Draw();
-			//AxisRenderer.Draw();
 
 			base.Draw(gameTime);
 		}
