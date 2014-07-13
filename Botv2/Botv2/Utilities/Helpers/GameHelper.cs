@@ -10,8 +10,8 @@ namespace Botv2.Utilities
 	{
 		static public Vector2 getCameraAngle()
 		{
-			float x = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.CAMERA + 4);
-			float y = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.CAMERA + 0);
+			float x = Bot.Mem.ReadFloat((int)Bot.client.BaseAddress + (int)Addresses.CSGO.CAMERA + 4);
+			float y = Bot.Mem.ReadFloat((int)Bot.client.BaseAddress + (int)Addresses.CSGO.CAMERA + 0);
 
 			return new Vector2(x, y);
 		}
@@ -68,9 +68,9 @@ namespace Botv2.Utilities
 
 		static public int detectLocalPlayerIndex()
 		{
-			float x = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY_POSITION + 0);
-			float y = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY_POSITION + 4);
-			float z = Bot.Mem.ReadFloat((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY_POSITION + 8);
+			int entityPntr = Bot.Mem.ReadMultiLevelPointer((int)Bot.client.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY, 4, new int[] { 0x00 });
+			float x = Bot.Mem.ReadFloat(entityPntr + 0xA0);
+			float y = Bot.Mem.ReadFloat(entityPntr + 0xA4);
 
 			for (int i = 0; i < Botv2.Bot.numPlayers; i++)
 			{
@@ -87,7 +87,7 @@ namespace Botv2.Utilities
 
 		static public float getPunchAngle()
 		{
-			int entityPntr = Bot.Mem.ReadMultiLevelPointer((int)Bot.client.BaseAddress + (int)Addresses.CSGO.BASE_ENTITY, 4, new int[] { 0x00 });
+			int entityPntr = Bot.Mem.ReadMultiLevelPointer((int)Bot.client.BaseAddress + (int)Addresses.CSGO.LOCAL_ENTITY, 4, new int[] { 0x00 });
 			return Bot.Mem.ReadFloat(entityPntr + 0x13dc);
 		}
 
@@ -138,9 +138,10 @@ namespace Botv2.Utilities
 
 		static public string getMapName()
 		{
-			// engine.dll+743959
 			if (Bot.engine == null) return "";
-			return Bot.Mem.ReadString((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.CURRENT_MAP); ;
+
+			int pntr = Bot.Mem.ReadMultiLevelPointer((int)Bot.engine.BaseAddress + (int)Addresses.CSGO.CURRENT_MAP, 4, new int[] { 9 });
+			return Bot.Mem.ReadString(pntr);
 		}
 	}
 }

@@ -90,8 +90,8 @@ namespace Botv2
 					Vector3 pos = GameHelper.getPlayerPositon(localEntityIndex);
 					if (GameView.instance != null && GameView.instance.ready)
 					{
-						//GameHelper.detectLocalPlayerIndex();
-						//GameView.instance.camera.SetCameraPosition(new Microsoft.Xna.Framework.Vector3(pos.x, pos.y, pos.z + 50));
+						GameHelper.detectLocalPlayerIndex();
+						GameView.instance.camera.SetCameraPosition(new Microsoft.Xna.Framework.Vector3(pos.x, pos.y, pos.z + 50));
 					}
 
 					//GameHelper.getMapName();
@@ -103,7 +103,7 @@ namespace Botv2
 							targetBestEnemyViaScore(); 
 							GameHelper.detectLocalPlayerIndex();
 
-							Colalision.test();
+							Collision.test();
 						}
 					}
 					if (lagReduction) Thread.Sleep(15);

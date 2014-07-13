@@ -8,10 +8,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Release</BuildConfiguration>
       <CompressContent>true</CompressContent>
-      <RootDirectory>C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\obj\x86\Release\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Admin\Documents\Visual Studio 2010\Projects\Botv2\Botv2\Botv2\bin\x86\Release\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Admin\Documents\GitHub\CSGOBot\Botv2\Botv2Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Admin\Documents\GitHub\CSGOBot\Botv2\Botv2\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Admin\Documents\GitHub\CSGOBot\Botv2\Botv2\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Admin\Documents\GitHub\CSGOBot\Botv2\Botv2\bin\x86\Release\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

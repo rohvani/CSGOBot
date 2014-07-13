@@ -10,43 +10,21 @@ using Jitter.Collision;
 using Jitter.Dynamics;
 using Jitter.Collision.Shapes;
 using Jitter.LinearMath;
+using Microsoft.Xna.Framework.Graphics;
+
+/*
+	ALL OF THIS CODE SUCKS AND DOESNT WORK THE WAY I WANT IT TO!!!
+*/
 
 namespace Botv2
 {
-	public class Colalision
+	public class Collision
 	{
-		static List<Vector3> vertices;
 		static World world;
 		static public void test()
 		{
-			if (vertices == null)
-			{
+			if (world == null) loadWorld();
 
-				CollisionSystem collision = new CollisionSystemPersistentSAP();
-				world = new World(collision);
-				List<JVector> jVertices = new List<JVector>();
-
-				foreach (Vector3 vect in vertices)
-				{
-					JVector temp = new JVector();
-					temp.X = vect.X;
-					temp.Y = vect.Y;
-					temp.Z = vect.Z;
-
-					jVertices.Add(temp);
-				}
-
-				RigidBody rigBody = new RigidBody(new ConvexHullShape(jVertices));
-				world.AddBody(rigBody);
-			}
-			//List<ushort[]> edges = map.getEdges();
-			////List<Face> faces = map.getOriginalFaces();
-			//map.getFaces();
-			//int[] surfedges = map.getSurfedges();
-			//int[] textureData = map.getTextureInfo();
-
-			
-	
 
 			var rot = Botv2.Utilities.GameHelper.getCameraAngle();
 			var pos = Botv2.Utilities.GameHelper.getCameraWorldPosition();
@@ -71,6 +49,9 @@ namespace Botv2
 
 		static public void loadWorld()
 		{
+			CollisionSystem collision = new CollisionSystemPersistentSAP();
+			world = new World(collision);
+
 			string mapName = Botv2.Utilities.GameHelper.getMapName();
 			string mapPath = Path.GetDirectoryName(Bot.process.Modules[0].FileName) + "/csgo/maps/" + mapName;
 
@@ -89,10 +70,8 @@ namespace Botv2
 			for (int i = 0; i < faces.Count; i++)
 			{	
 				Face face = faces[i];
-				List<JVector> jvertices = new List<JVector>();
-				List<TriangleVertexIndices> jindices = new List<TriangleVertexIndices>();
-
-				Octree what = new Octree(null, null)
+				List<JVector> jVertices = new List<JVector>();
+				List<VertexPositionColor> temp = new List<VertexPositionColor>();
 
 				for (int b = 0; b <= face.numEdges; b++)
 				{
@@ -111,7 +90,10 @@ namespace Botv2
 					temp.Add(new VertexPositionColor(vertices[verticeTwo], Color.LightGray));
 				}
 
-				RigidBody rigBody = new RigidBody(new TriangleMeshShape(null));
+				foreach (VertexPositionColor v in temp) jVertices.Add(new JVector(v.Position.X, v.Position.Y, v.Position.Z));
+				RigidBody rigBody = new RigidBody(new ConvexHullShape(jVertices));
+
+				world.AddBody(rigBody);
 			}
 		}
 	}
